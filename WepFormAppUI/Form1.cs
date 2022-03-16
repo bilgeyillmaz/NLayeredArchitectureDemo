@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
+using Business.DependencyResolvers.Ninject;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -19,8 +20,9 @@ namespace WepFormAppUI
         public Form1()
         {
             InitializeComponent();
-            _productService = new ProductManager(new EfProductDal());
-            _categoryService = new CategoryManager(new EfCategoryDal());
+            _productService = InstanceFactory.GetInstance<IProductService>();
+            _categoryService = InstanceFactory.GetInstance<ICategoryService>();
+            //Böylece dışa bağımlılık sıfıra iner, tamamen interfacelere bağımlı olmuş oluruz.
         }
         private IProductService _productService;
         private ICategoryService _categoryService;
